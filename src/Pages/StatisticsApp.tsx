@@ -20,6 +20,7 @@ const Statistics: React.FC<StatisticsProps> = () => {
   const hanskaaHuono = (event: React.MouseEvent<HTMLButtonElement>) => {
     setHuono(huono + 1)
   }
+  const ArvioCount = hyvä + neutraali + huono
   return (
     <div>
       <div>
@@ -43,6 +44,13 @@ const Statistics: React.FC<StatisticsProps> = () => {
         <h3>
           {"Huono " + huono}
         </h3>
+        <h3>
+          {"Keskiarvo " + (ArvioCount)/3}
+        </h3>
+        {
+        ArvioCount > 0 &&
+        <h3>{"Positiivisia " + (hyvä + neutraali) /ArvioCount * 100 + "%"}</h3>
+        }
       </div>
       <Link to='./'>Back</Link>
     </div>
