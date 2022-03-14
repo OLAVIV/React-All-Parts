@@ -8,7 +8,8 @@ type ButtonsProps = {
 const Buttons: React.FC<ButtonsProps> = () => {
   return (
     <div>
-      <Link to='phonebookapp'>Phone Book</Link>
+      <Link to='phonebookapp'>Phone Book </Link>
+      <Link to='statisticsapp'>Statistics</Link>
     </div>
   )
 }
