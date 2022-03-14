@@ -25,6 +25,7 @@ const StatisticsValue: React.FC<StatisticsValueProps> = (props) => {
     {props.unit}
   </h3>
 }
+
 const Statistics: React.FC<StatisticsProps> = () => {
 
   document.title = "Statistics App"
@@ -53,14 +54,38 @@ const Statistics: React.FC<StatisticsProps> = () => {
         {
           ArvioCount > 0
             ? <div>
-              <StatisticsValue text="Hyvä" value={hyvä} />
+              <table>
+                <tbody>
+                <tr>
+                  <td>Hyvä</td>
+                  <td>{hyvä}</td>
+                </tr>
+                <tr>
+                  <td>Neutraali</td>
+                  <td>{neutraali}</td>
+                </tr>
+                <tr>
+                  <td>Huono</td>
+                  <td>{huono}</td>
+                </tr>
+                <tr>
+                  <td>Keskiarvo</td>
+                  <td>{ArvioCount / 3}</td>
+                </tr>
+                <tr>
+                  <td>Positiivisia</td>
+                  <td>{(hyvä + neutraali) / ArvioCount * 100} %</td>
+                </tr>
+                </tbody>
+              </table>
+              {/* <StatisticsValue text="Hyvä" value={hyvä} />
               <StatisticsValue text="Neutraali" value={neutraali} />
               <StatisticsValue text="Huono" value={huono} />
               <StatisticsValue text="Keskiarvo" value={ArvioCount / 3} />
               {
                 ArvioCount > 0 &&
                 <StatisticsValue text="Positiivisia" value={(hyvä + neutraali) / ArvioCount * 100} unit="%" />
-              }
+              } */}
             </div>
             : <h3>Ei vielä arvioita</h3>
         }
