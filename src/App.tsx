@@ -8,18 +8,17 @@ import {
 } from "react-router-dom";
 
 import Phonebookapp from "./Pages/Phonebookapp";
+import Buttons from "./Components/Buttons";
 
 function App() {
 
   return (
     <Router>
       <Switch>
-
-        <Route exact path="/" component={ Phonebookapp } />
+        <Route exact path="/phonebookapp" component={ Phonebookapp } />
+        <Buttons />
         <Route><Redirect to="/" /></Route>
-
       </Switch>
-
     </Router>
   );
 }

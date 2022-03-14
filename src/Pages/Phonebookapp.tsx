@@ -1,5 +1,6 @@
 import React from 'react'
 import Phonebook from '../Components/Phonebook'
+import {Link} from "react-router-dom"; 
 
 type PhonebookAppProps = {
 
@@ -33,6 +34,7 @@ const PhonebookApp: React.FC<PhonebookAppProps> = () => {
   return (
     <div>
         <Phonebook phonebook={phonebook} />
+        <Link to='./'>Back</Link>
     </div>
   )
 }
