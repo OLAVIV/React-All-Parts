@@ -3,7 +3,28 @@ import { Link } from "react-router-dom";
 type StatisticsProps = {
 
 }
+type StatisticsValueProps = {
+  text: string
+  value: number
+  unit?: string
+}
+type StatisticsButtonProps = {
+  onClick: React.MouseEventHandler<HTMLButtonElement>
+  text: string
+}
 
+const StatisticsButton: React.FC<StatisticsButtonProps> = (props) => {
+  return <button onClick={props.onClick}>
+    {props.text}
+  </button>
+}
+const StatisticsValue: React.FC<StatisticsValueProps> = (props) => {
+  return <h3>
+    {props.text + " "}
+    {props.value}
+    {props.unit}
+  </h3>
+}
 const Statistics: React.FC<StatisticsProps> = () => {
 
   document.title = "Statistics App"
@@ -25,31 +46,17 @@ const Statistics: React.FC<StatisticsProps> = () => {
     <div>
       <div>
         <h1>Anna palautetta</h1>
-        <button onClick={hanskaaHyvä}>
-          Hyvä
-        </button>
-        <button onClick={hanskaaNeutraali}>
-          Neutraali
-        </button>
-        <button onClick={hanskaaHuono}>
-          Huono
-        </button>
+        <StatisticsButton text="Hyvä" onClick={hanskaaHyvä} />
+        <StatisticsButton text="Neutraali" onClick={hanskaaNeutraali} />
+        <StatisticsButton text="Huono" onClick={hanskaaHuono} />
         <h2>Statistiikka</h2>
-        <h3>
-          {"Hyvä " + hyvä}
-        </h3>
-        <h3>
-          {"Neutraali " + neutraali}
-        </h3>
-        <h3>
-          {"Huono " + huono}
-        </h3>
-        <h3>
-          {"Keskiarvo " + (ArvioCount)/3}
-        </h3>
+        <StatisticsValue text="Hyvä" value={hyvä} />
+        <StatisticsValue text="Neutraali" value={neutraali} />
+        <StatisticsValue text="Huono" value={huono} />
+        <StatisticsValue text="Keskiarvo" value={ArvioCount / 3} />
         {
-        ArvioCount > 0 &&
-        <h3>{"Positiivisia " + (hyvä + neutraali) /ArvioCount * 100 + "%"}</h3>
+          ArvioCount > 0 &&
+          <StatisticsValue text="Positiivisia" value={(hyvä + neutraali) / ArvioCount * 100} unit="%" />
         }
       </div>
       <Link to='./'>Back</Link>
