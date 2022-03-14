@@ -50,13 +50,19 @@ const Statistics: React.FC<StatisticsProps> = () => {
         <StatisticsButton text="Neutraali" onClick={hanskaaNeutraali} />
         <StatisticsButton text="Huono" onClick={hanskaaHuono} />
         <h2>Statistiikka</h2>
-        <StatisticsValue text="Hyvä" value={hyvä} />
-        <StatisticsValue text="Neutraali" value={neutraali} />
-        <StatisticsValue text="Huono" value={huono} />
-        <StatisticsValue text="Keskiarvo" value={ArvioCount / 3} />
         {
-          ArvioCount > 0 &&
-          <StatisticsValue text="Positiivisia" value={(hyvä + neutraali) / ArvioCount * 100} unit="%" />
+          ArvioCount > 0
+            ? <div>
+              <StatisticsValue text="Hyvä" value={hyvä} />
+              <StatisticsValue text="Neutraali" value={neutraali} />
+              <StatisticsValue text="Huono" value={huono} />
+              <StatisticsValue text="Keskiarvo" value={ArvioCount / 3} />
+              {
+                ArvioCount > 0 &&
+                <StatisticsValue text="Positiivisia" value={(hyvä + neutraali) / ArvioCount * 100} unit="%" />
+              }
+            </div>
+            : <h3>Ei vielä arvioita</h3>
         }
       </div>
       <Link to='./'>Back</Link>
