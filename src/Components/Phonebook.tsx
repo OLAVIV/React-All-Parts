@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from './Header'
-import Contents from './Contents'
+import Contacts from './Contacts'
 
 type PhonebookProps = {
     phonebook: any;
@@ -11,7 +11,7 @@ const Phonebook: React.FC<PhonebookProps> = (props) => {
   return (
     <div className="">
         <Header title={ props.phonebook.name } />
-        <Contents contacts={ props.phonebook.contacts } />
+        <Contacts contacts={ props.phonebook.contacts } />
     </div>
   )
 }
