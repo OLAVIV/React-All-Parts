@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import { idText } from 'typescript';
 
 class ReminderForm extends React.Component {
   constructor(props) {
@@ -26,25 +28,33 @@ class ReminderItem extends React.Component {
   }
   render() {
     return <div>
-      {new Date(this.props.timestamp).toDateString()}
+      {new Date(this.props.timestamp).toDateString() + " "}
       {this.props.name}
+      <button onClick={(e) => this.props.onRemoveItem(this.props.itemId)}>
+        Remove
+      </button>
     </div>
   }
 }
-
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      reminders: [
-        {
-          name: 'Buy some eggs',
-          timestamp: "2018-11-10T13:00:00.141Z"
-        }
-      ],
+      reminders: [],
       newName: '',
       newDate: ''
     }
+  }
+  
+  componentDidMount(){
+    let app = this
+    axios.get("http://localhost:3001/reminders")
+    .then(function (response) {
+      app.setState({
+        reminders: response.data
+      })
+      console.log(response);
+    })
   }
 
   onChangeName = (e) => {
@@ -77,6 +87,11 @@ class App extends React.Component {
     this.setState({ reminders: reminders });
   }
 
+  removeItem = (itemId) => {
+    window.confirm("Do you really want to remove this item?")
+    console.log(itemId)
+  }
+
   render() {
     return (
       <div>
@@ -85,7 +100,7 @@ class App extends React.Component {
         <h2>Reminders</h2>
         {this.state.reminders.map((reminder) => (
           <div key={reminder.name}>
-            <ReminderItem name={reminder.name} timestamp={reminder.timestamp}/>
+            <ReminderItem name={reminder.name} timestamp={reminder.timestamp} itemId={reminder.id} onRemoveItem={this.removeItem}/>
           </div>
         ))}
         {/* debug: {this.state.newName} */}
