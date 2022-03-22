@@ -45,16 +45,16 @@ class App extends React.Component {
       newDate: ''
     }
   }
-  
-  componentDidMount(){
+
+  componentDidMount() {
     let app = this
     axios.get("http://localhost:3001/reminders")
-    .then(function (response) {
-      app.setState({
-        reminders: response.data
+      .then(function (response) {
+        app.setState({
+          reminders: response.data
+        })
+        console.log(response);
       })
-      console.log(response);
-    })
   }
 
   onChangeName = (e) => {
@@ -88,8 +88,13 @@ class App extends React.Component {
   }
 
   removeItem = (itemId) => {
-    window.confirm("Do you really want to remove this item?")
-    console.log(itemId)
+    if (!window.confirm("Do you really want to remove this item?"))
+      return
+    axios.delete("http://localhost:3001/reminders/" + itemId)
+      .then(() => {
+        let reminders = this.state.reminders.filter(r => r.id != itemId)
+        this.setState({ reminders: reminders });
+      })
   }
 
   render() {
@@ -100,7 +105,7 @@ class App extends React.Component {
         <h2>Reminders</h2>
         {this.state.reminders.map((reminder) => (
           <div key={reminder.name}>
-            <ReminderItem name={reminder.name} timestamp={reminder.timestamp} itemId={reminder.id} onRemoveItem={this.removeItem}/>
+            <ReminderItem name={reminder.name} timestamp={reminder.timestamp} itemId={reminder.id} onRemoveItem={this.removeItem} />
           </div>
         ))}
         {/* debug: {this.state.newName} */}
