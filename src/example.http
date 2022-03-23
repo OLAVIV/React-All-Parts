@@ -1,0 +1,10 @@
+# DELETE http://localhost:3001/api/reminders/1 HTTP/1.1
+# GET http://localhost:3001/api/reminders HTTP/1.1
+POST http://localhost:3001/api/reminders
+Content-Type: application/json
+
+{
+    "name": "Buy more ",
+    "timestamp": "2021-11-11T13:00:00.000Z"
+}
+

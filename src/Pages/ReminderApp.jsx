@@ -48,22 +48,20 @@ class App extends React.Component {
 
   componentDidMount() {
     let app = this
-    axios.get("http://localhost:3001/reminders")
+    axios.get("http://localhost:3001/api/reminders")
       .then(function (response) {
         app.setState({
-          reminders: response.data
+          reminders: response.data.reminders
         })
         console.log(response);
       })
   }
 
   onChangeName = (e) => {
-    console.log(e.target.value)
     this.setState({ newName: e.target.value });
   }
 
   onChangeDate = (e) => {
-    console.log(e.target.value)
     this.setState({ newDate: e.target.value });
   }
 
@@ -81,16 +79,25 @@ class App extends React.Component {
     }
     const newReminder = {
       name: this.state.newName,
-      timestamp: this.state.newDate
+      timestamp: date.toISOString()
     }
-    reminders.push(newReminder)
-    this.setState({ reminders: reminders });
+    let app = this
+    axios.post("http://localhost:3001/api/reminders", newReminder)
+      .then(function (response) {
+        reminders.push(response.data)
+        app.setState({ reminders: reminders });
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
   }
 
   removeItem = (itemId) => {
     if (!window.confirm("Do you really want to remove this item?"))
       return
-    axios.delete("http://localhost:3001/reminders/" + itemId)
+    axios.delete("http://localhost:3001/api/reminders/" + itemId)
       .then(() => {
         let reminders = this.state.reminders.filter(r => r.id != itemId)
         this.setState({ reminders: reminders });
@@ -104,7 +111,7 @@ class App extends React.Component {
         <ReminderForm onChangeName={this.onChangeName} onChangeDate={this.onChangeDate} onAddReminder={this.addReminder} />
         <h2>Reminders</h2>
         {this.state.reminders.map((reminder) => (
-          <div key={reminder.name}>
+          <div key={reminder.id}>
             <ReminderItem name={reminder.name} timestamp={reminder.timestamp} itemId={reminder.id} onRemoveItem={this.removeItem} />
           </div>
         ))}
