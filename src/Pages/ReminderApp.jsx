@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
-import { idText } from 'typescript';
 
 class ReminderForm extends React.Component {
   constructor(props) {
@@ -48,7 +47,7 @@ class App extends React.Component {
 
   componentDidMount() {
     let app = this
-    axios.get("http://localhost:3001/api/reminders")
+    axios.get("https://reminderserver.herokuapp.com/api/reminders")
       .then(function (response) {
         app.setState({
           reminders: response.data.reminders
@@ -82,7 +81,7 @@ class App extends React.Component {
       timestamp: date.toISOString()
     }
     let app = this
-    axios.post("http://localhost:3001/api/reminders", newReminder)
+    axios.post("https://reminderserver.herokuapp.com/api/reminders", newReminder)
       .then(function (response) {
         reminders.push(response.data)
         app.setState({ reminders: reminders });
@@ -97,7 +96,7 @@ class App extends React.Component {
   removeItem = (itemId) => {
     if (!window.confirm("Do you really want to remove this item?"))
       return
-    axios.delete("http://localhost:3001/api/reminders/" + itemId)
+    axios.delete("https://reminderserver.herokuapp.com/api/reminders/" + itemId)
       .then(() => {
         let reminders = this.state.reminders.filter(r => r.id != itemId)
         this.setState({ reminders: reminders });
