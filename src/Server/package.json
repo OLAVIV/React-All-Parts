@@ -21,5 +21,8 @@
   "homepage": "https://github.com/OLAVIV/React-All-Parts#readme",
   "dependencies": {
     "cors": "^2.8.5"
+  },
+  "engines": {
+    "node": "16.11.0"
   }
 }
