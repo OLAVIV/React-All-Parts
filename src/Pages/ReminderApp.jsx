@@ -73,7 +73,7 @@ class App extends React.Component {
     }
     let date = new Date(this.state.newDate)
     if (date == "Invalid Date") {
-      alert("Invalid Date! Cannot add in this format use this instead,                         yyyy-mm-ddTHH:MM")
+      alert("Invalid Date! Cannot add in this format use this instead,                         yyyy-mm-ddthh:mm")
       return;
     }
     const newReminder = {
@@ -98,7 +98,7 @@ class App extends React.Component {
       return
     axios.delete("https://reminderserver.herokuapp.com/api/reminders/" + itemId)
       .then(() => {
-        let reminders = this.state.reminders.filter(r => r.id != itemId)
+        let reminders = this.state.reminders.filter(r => r._id != itemId)
         this.setState({ reminders: reminders });
       })
   }
@@ -110,8 +110,8 @@ class App extends React.Component {
         <ReminderForm onChangeName={this.onChangeName} onChangeDate={this.onChangeDate} onAddReminder={this.addReminder} />
         <h2>Reminders</h2>
         {this.state.reminders.map((reminder) => (
-          <div key={reminder.id}>
-            <ReminderItem name={reminder.name} timestamp={reminder.timestamp} itemId={reminder.id} onRemoveItem={this.removeItem} />
+          <div key={reminder._id}>
+            <ReminderItem name={reminder.name} timestamp={reminder.timestamp} itemId={reminder._id} onRemoveItem={this.removeItem} />
           </div>
         ))}
         {/* debug: {this.state.newName} */}
